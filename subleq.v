@@ -26,7 +26,7 @@ always @(posedge iClock) begin
 	if (iReset) begin
 		IP <= 13'd0;
 	end else if (counter == 2'd3) begin
-		IP <= leq ? IP + Instr[12:0] : IP + 13'd1;
+		IP <= leq ? Instr[12:0] : IP + 13'd1;
 	end
 end
 
