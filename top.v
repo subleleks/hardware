@@ -15,27 +15,23 @@ module top(
 	output [6:0] HEX7
 );
 
-wire cpu_clk;
+wire wClock;
 clock clock0(
-	.iCLK(KEY[1]),
-	.iMAX_CLK(CLOCK_50),
-	.iMANUAL_CLK(KEY[0]),
-	.iLIMIT(SW[7:0]),
-	.oOUT_CLK(cpu_clk),
-	.oSTATE(LEDG[1:0])
+	.iStateClock(KEY[1]),
+	.iMaxClock(CLOCK_50),
+	.iManualClock(KEY[0]),
+	.iLimit(SW[7:0]),
+	.oClock(wClock),
+	.oState(LEDG[1:0])
 );
-
 
 subleq cpu(
-	.iCLK(cpu_clk),
-	.iRST(~KEY[3])
+	.iClock(wClock),
+	.iReset(~KEY[3])
 );
 
-
-
 wire [31:0] decoder7_num;
-assign decoder7_num = 32'hF0CAF0FA;
-//assign decoder7_num = counter;
+assign decoder7_num = 32'h0ACEF0DA;
 decoder7 dec0(.in(decoder7_num[3:0]),   .out(HEX0));
 decoder7 dec1(.in(decoder7_num[7:4]),   .out(HEX1));
 decoder7 dec2(.in(decoder7_num[11:8]),  .out(HEX2));

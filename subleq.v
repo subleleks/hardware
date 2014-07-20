@@ -1,7 +1,7 @@
 
 module subleq(
-	input iCLK,
-	input iRST
+	input iClock,
+	input iReset
 );
 
 // =============================================================================
@@ -9,10 +9,10 @@ module subleq(
 // =============================================================================
 reg [1:0] counter;
 initial begin
-	counter <= 0;
+	counter <= 2'd0;
 end
-always @(posedge iCLK) begin
-	counter <= (iRST || counter[1]) ? 0 : counter + 1;
+always @(posedge iClock) begin
+	counter <= iReset ? 2'd0 : counter + 2'd1;
 end
 
 // =============================================================================
@@ -20,42 +20,55 @@ end
 // =============================================================================
 reg [12:0] IP;
 initial begin
-	IP <= 0;
+	IP <= 13'd0;
 end
-always @(posedge iCLK) begin
-	IP <= iRST ? 0 : (~counter[1] ? IP : (leq ? Jaddr + IP : IP + 1));
+always @(posedge iClock) begin
+	if (iReset) begin
+		IP <= 13'd0;
+	end else if (counter == 2'd3) begin
+		IP <= leq ? IP + Instr[12:0] : IP + 13'd1;
+	end
 end
 
 // =============================================================================
 // memory
 // =============================================================================
-wire [63:0] q_a, q_b;
+wire [63:0] q;
+wire [12:0] address;
+always @(IP, Instr, counter) begin
+	case (counter)
+		2'd0: address <= IP;
+		2'd1: address <= Instr[38:26];
+		default: address <= Instr[25:13]; // for states 2 and 3
+	endcase
+end
 mem mem0(
-	.address_a(counter[0] ? q_a[38:26] + IP : IP),
-	.address_b(counter[0] ? q_a[25:13] + IP : Baddr + IP),
-	.clock(iCLK),
-	.data_a(0),
-	.data_b(sub),
-	.wren_a(0),
-	.wren_b(counter[1]),
-	.q_a(q_a),
-	.q_b(q_b)
+	.address(address),
+	.clock(iClock),
+	.data(sub),
+	.wren(counter == 2'd3),
+	.q(q)
 );
 
 // =============================================================================
 // auxiliary registers
 // =============================================================================
-reg [12:0] Baddr, Jaddr;
-always @(posedge iCLK) begin
-	Baddr <= counter[0] ? q_a[25:13] : Baddr;
-	Jaddr <= counter[0] ? q_a[12:0]  : Jaddr;
+reg [63:0] Instr, A, B;
+always @(posedge iClock) begin
+	if (counter == 2'd0) begin
+		Instr <= q;
+	end else if (counter == 2'd1) begin
+		A <= q;
+	end else if (counter == 2'd2) begin
+		B <= q;
+	end
 end
 
 // =============================================================================
 // subleq
 // =============================================================================
 wire [63:0] sub;
-assign sub = q_b - q_a;
+assign sub = B - A;
 wire leq;
 assign leq = sub <= 0;
 
