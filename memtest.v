@@ -1,5 +1,5 @@
 
-module top(
+module memtest(
 	input CLOCK_50,
 	input [3:0] KEY,
 	input [17:0] SW,
@@ -15,25 +15,17 @@ module top(
 	output [6:0] HEX7
 );
 
-wire wClock;
-clock clock0(
-	.iStateClock(KEY[1]),
-	.iState(SW[9:8]),
-	.iMaxClock(CLOCK_50),
-	.iManualClock(KEY[0]),
-	.iLimit(SW[7:0]),
-	.oClock(wClock)
-);
-
-wire [12:0] wIP;
-subleq cpu(
-	.iClock(wClock),
-	.iReset(~KEY[3]),
-	.IP(wIP)
+wire [63:0] q;
+mem mem0(
+	.address({8'd0, SW[4:0]}),
+	.clock(KEY[0]),
+	.data({59'd0, SW[9:5]}),
+	.wren(SW[17]),
+	.q(q)
 );
 
 wire [31:0] decoder7_num;
-assign decoder7_num = {19'd0, wIP};
+assign decoder7_num = q[31:0];
 decoder7 dec0(.in(decoder7_num[3:0]),   .out(HEX0));
 decoder7 dec1(.in(decoder7_num[7:4]),   .out(HEX1));
 decoder7 dec2(.in(decoder7_num[11:8]),  .out(HEX2));
