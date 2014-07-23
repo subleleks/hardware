@@ -25,15 +25,38 @@ clock clock0(
 	.oClock(wClock)
 );
 
+wire [1:0] wcounter;
 wire [12:0] wIP;
+wire [63:0] wInstr;
+wire [63:0] wA;
+wire [63:0] wq;
+wire [63:0] wsub;
+wire [63:0] wDebug;
 subleq cpu(
 	.iClock(wClock),
 	.iReset(~KEY[3]),
-	.IP(wIP)
+	.ocounter(wcounter),
+	.oIP(wIP),
+	.oInstr(wInstr),
+	.oA(wA),
+	.oq(wq),
+	.osub(wsub)
 );
 
+always @(SW[15:13], wcounter, wIP, wInstr, wA, wq, wsub) begin
+	case (SW[15:13])
+		3'd0:		wDebug <= {62'b0, wcounter};
+		3'd1:		wDebug <= {51'b0, wIP};
+		3'd2:		wDebug <= wInstr;
+		3'd3:		wDebug <= wA;
+		3'd4:		wDebug <= wq;
+		3'd5:		wDebug <= wsub;
+		default:	wDebug <= 64'b0;
+	endcase
+end
+
 wire [31:0] decoder7_num;
-assign decoder7_num = {19'd0, wIP};
+assign decoder7_num = SW[17] ? wDebug[63:32] : wDebug[31:0];
 decoder7 dec0(.in(decoder7_num[3:0]),   .out(HEX0));
 decoder7 dec1(.in(decoder7_num[7:4]),   .out(HEX1));
 decoder7 dec2(.in(decoder7_num[11:8]),  .out(HEX2));

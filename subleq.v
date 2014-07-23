@@ -2,8 +2,23 @@
 module subleq(
 	input iClock,
 	input iReset,
-	output reg [12:0] IP
+	output [1:0] ocounter,
+	output [12:0] oIP,
+	output [63:0] oInstr,
+	output [63:0] oA,
+	output [63:0] oq,
+	output [63:0] osub
 );
+
+// =============================================================================
+// outputs
+// =============================================================================
+assign ocounter = counter;
+assign oIP = IP;
+assign oInstr = Instr;
+assign oA = A;
+assign oq = q;
+assign osub = sub;
 
 // =============================================================================
 // counter
@@ -19,6 +34,7 @@ end
 // =============================================================================
 // IP
 // =============================================================================
+reg [12:0] IP;
 initial begin
 	IP <= 13'd0;
 end
