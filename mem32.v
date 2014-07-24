@@ -4,7 +4,7 @@
 // MODULE: altsyncram 
 
 // ============================================================
-// File Name: mem.v
+// File Name: mem32.v
 // Megafunction Name(s):
 // 			altsyncram
 //
@@ -36,7 +36,7 @@
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
-module mem (
+module mem32 (
 	address,
 	clock,
 	data,
@@ -45,9 +45,9 @@ module mem (
 
 	input	[12:0]  address;
 	input	  clock;
-	input	[63:0]  data;
+	input	[31:0]  data;
 	input	  wren;
-	output	[63:0]  q;
+	output	[31:0]  q;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
@@ -56,8 +56,8 @@ module mem (
 // synopsys translate_on
 `endif
 
-	wire [63:0] sub_wire0;
-	wire [63:0] q = sub_wire0[63:0];
+	wire [31:0] sub_wire0;
+	wire [31:0] q = sub_wire0[31:0];
 
 	altsyncram	altsyncram_component (
 				.address_a (address),
@@ -87,7 +87,7 @@ module mem (
 		altsyncram_component.clock_enable_input_a = "BYPASS",
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 		altsyncram_component.intended_device_family = "Cyclone IV E",
-		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=mem",
+		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=ra32",
 		altsyncram_component.lpm_type = "altsyncram",
 		altsyncram_component.numwords_a = 8192,
 		altsyncram_component.operation_mode = "SINGLE_PORT",
@@ -96,7 +96,7 @@ module mem (
 		altsyncram_component.power_up_uninitialized = "FALSE",
 		altsyncram_component.read_during_write_mode_port_a = "DONT_CARE",
 		altsyncram_component.widthad_a = 13,
-		altsyncram_component.width_a = 64,
+		altsyncram_component.width_a = 32,
 		altsyncram_component.width_byteena_a = 1;
 
 
@@ -122,7 +122,7 @@ endmodule
 // Retrieval info: PRIVATE: INIT_TO_SIM_X NUMERIC "0"
 // Retrieval info: PRIVATE: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "1"
-// Retrieval info: PRIVATE: JTAG_ID STRING "mem"
+// Retrieval info: PRIVATE: JTAG_ID STRING "ra32"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
 // Retrieval info: PRIVATE: MIFfilename STRING ""
 // Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "8192"
@@ -136,13 +136,13 @@ endmodule
 // Retrieval info: PRIVATE: UseDQRAM NUMERIC "1"
 // Retrieval info: PRIVATE: WRCONTROL_ACLR_A NUMERIC "0"
 // Retrieval info: PRIVATE: WidthAddr NUMERIC "13"
-// Retrieval info: PRIVATE: WidthData NUMERIC "64"
+// Retrieval info: PRIVATE: WidthData NUMERIC "32"
 // Retrieval info: PRIVATE: rden NUMERIC "0"
 // Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
-// Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=mem"
+// Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=ra32"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
 // Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "8192"
 // Retrieval info: CONSTANT: OPERATION_MODE STRING "SINGLE_PORT"
@@ -151,22 +151,22 @@ endmodule
 // Retrieval info: CONSTANT: POWER_UP_UNINITIALIZED STRING "FALSE"
 // Retrieval info: CONSTANT: READ_DURING_WRITE_MODE_PORT_A STRING "DONT_CARE"
 // Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "13"
-// Retrieval info: CONSTANT: WIDTH_A NUMERIC "64"
+// Retrieval info: CONSTANT: WIDTH_A NUMERIC "32"
 // Retrieval info: CONSTANT: WIDTH_BYTEENA_A NUMERIC "1"
 // Retrieval info: USED_PORT: address 0 0 13 0 INPUT NODEFVAL "address[12..0]"
 // Retrieval info: USED_PORT: clock 0 0 0 0 INPUT VCC "clock"
-// Retrieval info: USED_PORT: data 0 0 64 0 INPUT NODEFVAL "data[63..0]"
-// Retrieval info: USED_PORT: q 0 0 64 0 OUTPUT NODEFVAL "q[63..0]"
+// Retrieval info: USED_PORT: data 0 0 32 0 INPUT NODEFVAL "data[31..0]"
+// Retrieval info: USED_PORT: q 0 0 32 0 OUTPUT NODEFVAL "q[31..0]"
 // Retrieval info: USED_PORT: wren 0 0 0 0 INPUT NODEFVAL "wren"
 // Retrieval info: CONNECT: @address_a 0 0 13 0 address 0 0 13 0
 // Retrieval info: CONNECT: @clock0 0 0 0 0 clock 0 0 0 0
-// Retrieval info: CONNECT: @data_a 0 0 64 0 data 0 0 64 0
+// Retrieval info: CONNECT: @data_a 0 0 32 0 data 0 0 32 0
 // Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
-// Retrieval info: CONNECT: q 0 0 64 0 @q_a 0 0 64 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem_inst.v FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem_bb.v FALSE
+// Retrieval info: CONNECT: q 0 0 32 0 @q_a 0 0 32 0
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem32_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem32_bb.v FALSE
 // Retrieval info: LIB_FILE: altera_mf

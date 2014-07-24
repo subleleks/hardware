@@ -24,15 +24,14 @@ clock clock0(
 	.iLimit(SW[7:0]),
 	.oClock(wClock)
 );
-
+/*
 wire [1:0] wcounter;
 wire [12:0] wIP;
 wire [63:0] wInstr;
 wire [63:0] wA;
 wire [63:0] wq;
 wire [63:0] wsub;
-wire [63:0] wDebug;
-subleq cpu(
+subleq64 cpu64(
 	.iClock(wClock),
 	.iReset(~KEY[3]),
 	.ocounter(wcounter),
@@ -54,8 +53,41 @@ always @(SW[15:13], wcounter, wIP, wInstr, wA, wq, wsub) begin
 		default:	wDebug <= 64'b0;
 	endcase
 end
+*/
+wire [2:0] wcounter;
+wire [31:0] wIP;
+wire [31:0] wA;
+wire [31:0] wB;
+wire [31:0] wJ;
+wire [31:0] wq;
+wire [31:0] wsub;
+subleq32 cpu32(
+	.iClock(wClock),
+	.iReset(~KEY[3]),
+	.ocounter(wcounter),
+	.oIP(wIP),
+	.oA(wA),
+	.oB(wB),
+	.oJ(wJ),
+	.oq(wq),
+	.osub(wsub)
+);
+
+always @(SW[15:13], wcounter, wIP, wA, wB, wJ, wq, wsub) begin
+	case (SW[15:13])
+		3'd0:		wDebug <= {61'b0, wcounter};
+		3'd1:		wDebug <= {32'b0, wIP};
+		3'd2:		wDebug <= {32'b0, wA};
+		3'd3:		wDebug <= {32'b0, wB};
+		3'd4:		wDebug <= {32'b0, wJ};
+		3'd5:		wDebug <= {32'b0, wq};
+		3'd6:		wDebug <= {32'b0, wsub};
+		default:	wDebug <= 64'b0;
+	endcase
+end
 
 wire [31:0] decoder7_num;
+wire [63:0] wDebug;
 assign decoder7_num = SW[17] ? wDebug[63:32] : wDebug[31:0];
 decoder7 dec0(.in(decoder7_num[3:0]),   .out(HEX0));
 decoder7 dec1(.in(decoder7_num[7:4]),   .out(HEX1));
