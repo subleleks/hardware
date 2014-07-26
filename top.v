@@ -56,7 +56,7 @@ always @(SW[15:13], wcounter, wIP, wA, wB, wJ, wq, wsub, wleq) begin
 		3'd4:	decoder7_num <= wJ;
 		3'd5:	decoder7_num <= wq;
 		3'd6:	decoder7_num <= wsub;
-		3'd7:	decoder7_num <= {31'b, wleq};
+		3'd7:	decoder7_num <= {31'b0, wleq};
 	endcase
 end
 decoder7 dec0(.in(decoder7_num[3:0]),   .out(HEX0));

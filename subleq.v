@@ -101,6 +101,6 @@ end
 wire [31:0] sub;
 assign sub = q - A;
 wire leq;
-assign leq = sub <= 0;
+assign leq = sub[31] || sub == 32'b0;
 
 endmodule
