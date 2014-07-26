@@ -4,7 +4,7 @@
 // MODULE: altsyncram 
 
 // ============================================================
-// File Name: mem32.v
+// File Name: mem.v
 // Megafunction Name(s):
 // 			altsyncram
 //
@@ -36,7 +36,7 @@
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
-module mem32 (
+module mem (
 	address,
 	clock,
 	data,
@@ -87,7 +87,7 @@ module mem32 (
 		altsyncram_component.clock_enable_input_a = "BYPASS",
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 		altsyncram_component.intended_device_family = "Cyclone IV E",
-		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=ra32",
+		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=mem",
 		altsyncram_component.lpm_type = "altsyncram",
 		altsyncram_component.numwords_a = 8192,
 		altsyncram_component.operation_mode = "SINGLE_PORT",
@@ -122,7 +122,7 @@ endmodule
 // Retrieval info: PRIVATE: INIT_TO_SIM_X NUMERIC "0"
 // Retrieval info: PRIVATE: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "1"
-// Retrieval info: PRIVATE: JTAG_ID STRING "ra32"
+// Retrieval info: PRIVATE: JTAG_ID STRING "mem"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
 // Retrieval info: PRIVATE: MIFfilename STRING ""
 // Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "8192"
@@ -142,7 +142,7 @@ endmodule
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
-// Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=ra32"
+// Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=mem"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
 // Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "8192"
 // Retrieval info: CONSTANT: OPERATION_MODE STRING "SINGLE_PORT"
@@ -163,10 +163,10 @@ endmodule
 // Retrieval info: CONNECT: @data_a 0 0 32 0 data 0 0 32 0
 // Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
 // Retrieval info: CONNECT: q 0 0 32 0 @q_a 0 0 32 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem32.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem32_inst.v FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL mem32_bb.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL mem_bb.v FALSE
 // Retrieval info: LIB_FILE: altera_mf

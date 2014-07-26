@@ -1,5 +1,5 @@
 
-module subleq32(
+module subleq(
 	input iClock,
 	input iReset,
 	output [2:0] ocounter,
@@ -8,7 +8,8 @@ module subleq32(
 	output [31:0] oB,
 	output [31:0] oJ,
 	output [31:0] oq,
-	output [31:0] osub
+	output [31:0] osub,
+	output oleq
 );
 
 // =============================================================================
@@ -21,6 +22,7 @@ assign oB = B;
 assign oJ = J;
 assign oq = q;
 assign osub = sub;
+assign oleq = leq;
 
 // =============================================================================
 // counter
@@ -64,7 +66,7 @@ always @(counter, IP, A, B) begin
 		address <= B;
 	end
 end
-mem32 mem32_0(
+mem mem0(
 	.address(address[12:0]),
 	.clock(iClock),
 	.data(sub),
