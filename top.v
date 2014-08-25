@@ -12,7 +12,8 @@ module top(
 	output [6:0] HEX4,
 	output [6:0] HEX5,
 	output [6:0] HEX6,
-	output [6:0] HEX7
+	output [6:0] HEX7,
+	inout [35:0] GPIO
 );
 
 wire wClock;
