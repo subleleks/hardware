@@ -69,4 +69,6 @@ decoder7 dec5(.in(decoder7_num[23:20]), .out(HEX5));
 decoder7 dec6(.in(decoder7_num[27:24]), .out(HEX6));
 decoder7 dec7(.in(decoder7_num[31:28]), .out(HEX7));
 
+assign GPIO[0] = (wcounter == 3'd0);
+
 endmodule
